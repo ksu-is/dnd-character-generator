@@ -1,4 +1,4 @@
-#DnD Character Creator Roadmap
+# DnD Character Creator Roadmap
 - [] Set scope of options to be available in this genrator
 - [] Create ability scores
 - [] Create race funectionality

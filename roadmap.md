@@ -1,9 +1,9 @@
 # DnD Character Creator Roadmap
-- [ ] Set scope of options to be available in this genrator
-- [ ] Evaluate existing repositories
-- [ ] Create ability scores
-- [ ] Create race funectionality
-- [ ] Create class functionality
+- [ ] Set scope of options to be available in this genrator - next 2 weeks: Mason
+- [ ] Evaluate existing repositories - next 2 weeks: Mason
+- [ ] Create ability scores - next 2 weeks: Mason
+- [ ] Create race funectionality- next 2 weeks: Mason
+- [ ] Create class functionality- next 2 weeks: Mason
 - [ ] Create skills
 - [ ] Create derived statistics (initiative, attack bonues, save DCs, prepared spells)
 - [ ] Add options for race and class

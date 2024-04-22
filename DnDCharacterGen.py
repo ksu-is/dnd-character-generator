@@ -70,6 +70,8 @@ char2 = Wizard("Volkmir")
 char2.toString()  
     
 
+#TESTING TESTING
+
 
 
 

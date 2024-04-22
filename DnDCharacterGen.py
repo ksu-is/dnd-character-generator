@@ -68,9 +68,25 @@ class Wizard:
     
 char2 = Wizard("Volkmir")  
 char2.toString()  
-    
 
-#TESTING TESTING
+#Creating Character Races as Python Classes
+
+class Elf:
+    title = "Wood Elf"
+    size = "Medium"
+    Dex = Dex + 2
+    Wis = Wis + 1
+    darkvision = True
+    Languages = ["Common", "Elven"]
+    feature = "Fleet of Foot"
+    
+        
+    def toString(self):
+        print("You are a Wood Elf. Your size class is medium. You gain a +2 to your Dexterity and +1 to your Wisdom scores. You have darkvision with a range of 60ft. You speak the common language and Elven. You gain the feature Fleet of Foot.")
+    
+    
+race = Elf()
+race.toString()
 
 
 

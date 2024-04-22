@@ -19,6 +19,7 @@ characterClass = ""
 #init derived stats
 str_mod = 0
 dex_mod = 0
+con_mod = 2
 int_mod = 0
 wis_mod = 0
 cha_mod = 0
@@ -38,8 +39,25 @@ class CharacterClass:
 fighter = CharacterClass("Fighter", 10)
 wizard = CharacterClass("Wizard", 6)
 
-print("Class: {} \nHit Dice: d{}".format(fighter.className, fighter.hd))
-print("Class: {} \nHit Dice: d{}".format(wizard.className, wizard.hd))
+#print("Class: {} \nHit Dice: d{}".format(fighter.className, fighter.hd))
+#print("Class: {} \nHit Dice: d{}".format(wizard.className, wizard.hd))
+
+#Creating The Fighter Character Class as its own Python Class
+
+class Fighter:
+    title = "Fighter"
+    hd = 10
+    profBonus = 3
+    ac = 16
+    def __init__(self, name):
+        self.charName = name
+
+    def toString(self):
+        print("Name: {} \nClass: {} \nHit Dice: d{} \nProficiency Bonus: +{} \nArmor Class: {} ".format(self.charName, Fighter.title, Fighter.hd, Fighter.profBonus, Fighter.ac))
+        
+char = Fighter("Steve")
+char.toString()
+
 
     
     

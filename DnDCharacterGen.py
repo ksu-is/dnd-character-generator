@@ -80,14 +80,28 @@ class Elf:
     Languages = ["Common", "Elven"]
     feature = "Fleet of Foot"
     
-        
     def toString(self):
-        print("You are a Wood Elf. Your size class is medium. You gain a +2 to your Dexterity and +1 to your Wisdom scores. You have darkvision with a range of 60ft. You speak the common language and Elven. You gain the feature Fleet of Foot.")
+        print("You are a Wood Elf. Your size class is medium. You gain a +2 to your Dexterity and +1 to your Wisdom scores. You have darkvision with a range of 60ft. You speak the common language and Elven. You gain the feature Fleet of Foot.\n")
     
     
 race = Elf()
 race.toString()
 
+class Human:
+    title = "Human"
+    size = "Medium"
+    Str = Str + 1
+    Dex = Dex + 1
+    Con = Con + 1
+    Int = Int + 1
+    Wis = Wis + 1
+    Cha = Cha + 1
+    darkvision = False
+    Languages = ["Common"]
+        
+    def toString(self):
+        print("You are a Human. Your size class is medium. You gain a +1 to all ability scores. You speak the common language.\n")
 
-
+race2 = Human()
+race2.toString()
 

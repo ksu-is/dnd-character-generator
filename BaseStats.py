@@ -1,7 +1,10 @@
 """
 DnD Character Generator
 Author: Mason Nix
-This section defines the core character statistics
+Main Progran Functionality
+
+!!!!To understand the distinction between "Character Class" and "Python Class" please see the README. It is important to avoid confusion!!!!!
+
 """
 #initializing core stats
 Str = 0

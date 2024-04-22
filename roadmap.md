@@ -3,7 +3,7 @@
 - [X] Evaluate existing repositories - next 2 weeks: Mason
 - [X] Create ability scores - next 2 weeks: Mason
 - [ ] Create race funectionality- next 2 weeks: Mason
-- [ ] Create class functionality- next 2 weeks: Mason
+- [X] Create class functionality- next 2 weeks: Mason
 - [ ] Create skills
 - [ ] Create derived statistics (initiative, attack bonues, save DCs, prepared spells)
 - [ ] Add options for race and class

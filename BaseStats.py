@@ -18,7 +18,7 @@ characterClass = ""
 
 #init derived stats
 str_mod = 0
-dex_mod = 0
+dex_mod = 2
 con_mod = 2
 int_mod = 0
 wis_mod = 0
@@ -36,30 +36,38 @@ class CharacterClass:
         self.className = title
         self.hd = hd
 
-fighter = CharacterClass("Fighter", 10)
-wizard = CharacterClass("Wizard", 6)
-
-#print("Class: {} \nHit Dice: d{}".format(fighter.className, fighter.hd))
-#print("Class: {} \nHit Dice: d{}".format(wizard.className, wizard.hd))
 
 #Creating The Fighter Character Class as its own Python Class
 
 class Fighter:
     title = "Fighter"
     hd = 10
-    profBonus = 3
+    profBonus = 2
     ac = 16
+    hp = hd + con_mod
     def __init__(self, name):
         self.charName = name
 
     def toString(self):
-        print("Name: {} \nClass: {} \nHit Dice: d{} \nProficiency Bonus: +{} \nArmor Class: {} ".format(self.charName, Fighter.title, Fighter.hd, Fighter.profBonus, Fighter.ac))
+        print("Name: {} \nClass: {} \nHit Dice: d{} \nProficiency Bonus: +{} \nArmor Class: {}\n".format(self.charName, Fighter.title, Fighter.hd, Fighter.profBonus, Fighter.ac))
         
-char = Fighter("Steve")
-char.toString()
+char = Fighter("Njal")
+char.toString() 
 
-
+class Wizard:
+    title = "Wizard"
+    hd = 6
+    profBonus = 2
+    ac = 10 + dex_mod
+    hp = hd + con_mod
+    def __init__(self, name):
+        self.charName = name
+        
+    def toString(self):
+        print("Name: {} \nClass: {} \nHit Dice: d{} \nProficiency Bonus: +{} \nArmor Class: {}\n".format(self.charName, Wizard.title, Wizard.hd, Wizard.profBonus, Wizard.ac))
     
+char2 = Wizard("Volkmir")  
+char2.toString()  
     
 
 

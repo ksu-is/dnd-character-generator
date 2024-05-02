@@ -4,7 +4,6 @@
 - [X] Create ability scores - next 2 weeks: Mason
 - [X] Create race funectionality- next 2 weeks: Mason
 - [X] Create class functionality- next 2 weeks: Mason
-- [ ] Create skills
 - [X] Create derived statistics (initiative, AC, modifiers)
 - [X] Add options for race and class
 - [X] Add functionality to output all statistics to a file
@@ -12,3 +11,5 @@
 - [X] Add GUI
 - [ ] add wizard spells :(
 - [ ] implement misc features (as a list maybe??)
+- [ ] create spell dcs, and attacks
+- [ ] Create skills

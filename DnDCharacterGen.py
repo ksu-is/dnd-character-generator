@@ -50,6 +50,8 @@ class Fighter:
         return "Class: Level 1 {} \nHit Points: {}\nHit Dice: 1d{} \nProficiency Bonus: +{} \n\nArmor Class: {}\n".format(Fighter.title, Fighter.getHp(self), Fighter.hd, Fighter.profBonus, Fighter.ac)
     def getHp(self):
         return self.hd + con_mod
+    def getSaves(self):
+        return["con","str"]
         
 class Wizard:
     title = "Wizard"
@@ -75,6 +77,8 @@ class Wizard:
         return "Class: Level 1 {} \nHit Points: {}\nHit Dice: 1d{} \nProficiency Bonus: +{} \n\nArmor Class: {}\n".format(Wizard.title, Wizard.getHp(self), Wizard.hd, Wizard.profBonus, Wizard.ac)
     def getHp(self):
         return self.hd + con_mod
+    def getSaves(self):
+        return["wis","int"]
         
 class Rogue:
     title = "Rogue"
@@ -99,6 +103,8 @@ class Rogue:
         return "Class: Level 1 {} \nHit Points: {}\nHit Dice: 1d{} \nProficiency Bonus: +{} \n\nArmor Class: {}\n".format(Rogue.title, Rogue.getHp(self), Rogue.hd, Rogue.profBonus, Rogue.ac)
     def getHp(self):
         return self.hd + con_mod
+    def getSaves(self):
+        return["dex","int"]
 
 
 #Creating Character Races as Python Classes
@@ -166,7 +172,7 @@ class Dwarf:
     def getString(self):
       return self.description
   
-
+#method to add racial bonuses to ability scores
 def addracialBonus(species, job):
     
     job.Str += species.str_race
@@ -175,7 +181,8 @@ def addracialBonus(species, job):
     job.Int += species.int_race
     job.Wis += species.wis_race
     job.Cha += species.cha_race
-    
+
+#method to determine ability modifiers which derive from their ability score
 def getMods(stat):
     if stat == 10 or stat == 11:
         return 0
@@ -189,6 +196,35 @@ def getMods(stat):
         return 4
     if stat == 20:
         return 5
+
+def calcSaves(prof,job):
+    save1 = prof[0]
+    save2 = prof[1]
+    str_save = str_mod
+    dex_save = dex_mod
+    con_save = con_mod
+    int_save = int_mod
+    wis_save = wis_mod
+    cha_save = cha_mod
+    
+    if save1.lower() == "str"  or save2.lower() == "str":
+        str_save += job.profBonus
+    if save1.lower() == "dex"  or save2.lower() == "dex":
+        dex_save += job.profBonus
+    if save1.lower() == "con"  or save2.lower() == "con":
+        con_save += job.profBonus
+    if save1.lower() == "int"  or save2.lower() == "int":
+        int_save += job.profBonus
+    if save1.lower() == "wis"  or save2.lower() == "wis":
+        wis_save += job.profBonus
+    if save1.lower() == "cha"  or save2.lower() == "cha":
+        cha_save += job.profBonus
+        
+    return [str_save, dex_save ,con_save ,int_save ,wis_save ,cha_save]
+    
+        
+        
+        
         
         
     
@@ -230,6 +266,7 @@ con_mod = getMods(vocation.Con)
 int_mod = getMods(vocation.Int)
 wis_mod = getMods(vocation.Wis)
 cha_mod = getMods(vocation.Cha)
+savesList = calcSaves(vocation.getSaves(),vocation)
  
 #gathering user input for a character name
 while(True):
@@ -253,7 +290,7 @@ sheet.write(vocation.toString())
 sheet.write("Initiative: +{}\n".format(dex_mod))
 sheet.write("Speed: {} ft\n\n".format(race.speed))
 sheet.write("Strength: {}(+{}) | Dexterity: {}(+{}) | Constitution: {}(+{}) | Intelligence: {}(+{}) | Wisdom: {}(+{}) | Charisma: {}(+{}) \n".format(vocation.Str, str_mod, vocation.Dex, dex_mod, vocation.Con, con_mod, vocation.Int, int_mod, vocation.Wis, wis_mod, vocation.Cha, cha_mod))
-
+sheet.write("Saving Throws: Str +{}, Dex +{}, Con +{}, Int +{}, Wis +{}, Cha +{}".format(savesList[0], savesList[1], savesList[2], savesList[3], savesList[4], savesList[5]))
 
 print("Character Sheet Generated Succesfully! \nPlease look for a file named Character_Sheet_{}.txt in the directory you ran this program.".format(name))
 sheet.close()

@@ -5,9 +5,9 @@
 - [X] Create race funectionality- next 2 weeks: Mason
 - [X] Create class functionality- next 2 weeks: Mason
 - [ ] Create skills
-- [ ] Create derived statistics (initiative, attack bonues, save DCs, prepared spells)
+- [X] Create derived statistics (initiative, AC, modifiers)
 - [X] Add options for race and class
-- [ ] Add functionality to output all statistics to a file
+- [X] Add functionality to output all statistics to a file
 - [X] Add user input
 - [X] Add GUI
 - [ ] add wizard spells :(

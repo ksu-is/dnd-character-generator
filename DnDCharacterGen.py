@@ -9,6 +9,8 @@ Main Progran Functionality
 
 """
 import easygui
+import os
+import sys
 
 #initializing core stats
 Str = 0
@@ -29,10 +31,10 @@ wis_mod = 0
 cha_mod = 0
 ac = 0
 
-#classList = ["Figher", "Bard", "Rogue", "Wizard"]
+features = []
 
 
-#Creating The Fighter Character Class as its own Python Class
+#Creating Character Classes as its own Python Class
 
 class Fighter:
     title = "Fighter"
@@ -91,7 +93,7 @@ class Elf:
     Wis = Wis + 1
     darkvision = True
     Languages = ["Common", "Elven"]
-    feature = "Fleet of Foot"
+    features.append("Fleet of Foot: speed increased by 5 ft")
     
     description = "You are a Wood Elf. Your size class is medium. You gain a +2 to your Dexterity and +1 to your Wisdom scores. You have darkvision with a range of 60ft. You speak the common language and Elven. You gain the feature Fleet of Foot.\n"
     
@@ -118,7 +120,6 @@ class Human:
       return self.description
     
 
-
 class Dwarf:
     title = "Dwarf"
     size = "Medium"
@@ -134,9 +135,10 @@ class Dwarf:
       return self.description
     
 
-
+#Gathering user input and creating GUI using easygui
 easygui.msgbox("Hello! Welcome to DnD Character Gen!\n")
 
+#User selects their race from elf, human, or dwarf
 raceChoice = easygui.buttonbox("Please choose a character race:", "Race Selection", ("Elf", "Human", "Dwarf"))
 if raceChoice.lower() == "elf":
     race = Elf()
@@ -148,7 +150,8 @@ elif raceChoice.lower() == "dwarf":
         
     
 easygui.msgbox(race.getString())
-    
+
+##User selects their character class from wizard, fighter, or rogue    
 core =  easygui.buttonbox("Please choose a character class\n\nFighters stike down their foes with raw martial prowess\n\nWizards cast powerful magic to control the battlefield\n\nRogues use stealth to strike from the shadows","Class Selction",("Fighter","Wizard","Rogue"))
 if core.lower() == "wizard":
     vocation = Wizard()
@@ -159,6 +162,28 @@ elif core.lower() == "fighter":
 elif core.lower() == "rogue":
     vocation = Rogue()
     easygui.msgbox(vocation.getString())
+ 
+#gathering user input for a character name
+while(True):
+    name = easygui.enterbox("Name your character:")  
     
+    if name == None:
+        print("Exiting...")
+        sys.exit()
+    if name.isalpha() and len(name) <= 20:
+        break
+    else:
+        easygui.msgbox("Please input only A-Z and use 20 or less characters")
+
+    
+
+sheet = open("Character_Sheet_{}.txt".format(name), "w")
+
+sheet.write(vocation.toString())
+
+
+
+sheet.close()
+   
 
     

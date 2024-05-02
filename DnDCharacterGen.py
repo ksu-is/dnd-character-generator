@@ -12,23 +12,15 @@ import easygui
 import os
 import sys
 
-#initializing core stats
-Str = 10
-Dex = 10
-Con = 10
-Int = 10
-Wis = 10
-Cha = 10
-
-
-#init derived stats
+#init derived stats global variables
 str_mod = 0
 dex_mod = 0
 con_mod = 0
 int_mod = 0
 wis_mod = 0
 cha_mod = 0
-ac = 0
+
+
 
 features = []
 
@@ -41,6 +33,14 @@ class Fighter:
     profBonus = 2
     ac = 16
     hp = hd + con_mod
+    
+    Str = 15
+    Dex = 13
+    Con = 14
+    Int = 10
+    Wis = 10
+    Cha = 10
+    
     
     description = "You are a Fighter. You wield your weapon with unmatched skill."
     
@@ -57,6 +57,14 @@ class Wizard:
     ac = 13 + dex_mod
     hp = hd + con_mod
     
+    Str = 10
+    Dex = 14
+    Con = 12
+    Int = 15
+    Wis = 11
+    Cha = 10
+    
+    
     description = "You are a Wizard! You hold the power to bend reality to your will."
     
     def getString(self):
@@ -71,6 +79,13 @@ class Rogue:
     profBonus = 2
     ac = 11 + dex_mod
     hp = hd + con_mod
+
+    Str = 10
+    Dex = 15
+    Con = 12
+    Int = 11
+    Wis = 10
+    Cha = 14
     
     description = "You are a Rogue. You inflict deadly wounds from the shadows."
     
@@ -79,8 +94,7 @@ class Rogue:
         
     def toString(self):
         return "Class: Level 1 {} \nHit Points: {}\nHit Dice: 1d{} \nProficiency Bonus: +{} \n\nArmor Class: {}\n".format(Rogue.title, Rogue.hp, Rogue.hd, Rogue.profBonus, Rogue.ac)
-    
-#print("Str: 14(+2) | Dex: 10(+0) | Con: 16(+3) | Int: 17(+3) | Wis: 12(+1) | Cha: 10(+0) \n")
+
 
 #Creating Character Races as Python Classes
 
@@ -88,8 +102,14 @@ class Elf:
     title = "Wood Elf"
     size = "Medium"
     speed = 35
-    Dex = Dex + 2
-    Wis = Wis + 1
+    
+    str_race = 0
+    dex_race = 2
+    con_race = 0
+    int_race = 0
+    wis_race = 1
+    cha_race = 0 
+    
     darkvision = True
     Languages = ["Common", "Elven"]
     features.append("Fleet of Foot: speed increased by 5 ft")
@@ -104,12 +124,14 @@ class Human:
     title = "Human"
     size = "Medium"
     speed = 30
-    Str = Str + 1
-    Dex = Dex + 1
-    Con = Con + 1
-    Int = Int + 1
-    Wis = Wis + 1
-    Cha = Cha + 1
+    
+    str_race = 1
+    dex_race = 1
+    con_race = 1
+    int_race = 1
+    wis_race = 1
+    cha_race = 1 
+
     darkvision = False
     Languages = ["Common"]
         
@@ -123,8 +145,14 @@ class Dwarf:
     title = "Dwarf"
     size = "Medium"
     speed = 25
-    Str = Str + 2
-    Con = Con + 2
+    
+    str_race = 2
+    dex_race = 0
+    con_race = 2
+    int_race = 0
+    wis_race = 0
+    cha_race = 0 
+    
     darkvision = True
     Languages = ["Common, Dwarven"]
         
@@ -132,6 +160,17 @@ class Dwarf:
     
     def getString(self):
       return self.description
+  
+
+def addracialBonus(species, job):
+    
+    job.Str += species.str_race
+    job.Dex += species.dex_race
+    job.Con += species.con_race
+    job.Int += species.int_race
+    job.Wis += species.wis_race
+    job.Cha += species.cha_race
+    
     
 
 #Gathering user input and creating GUI using easygui
@@ -141,9 +180,9 @@ easygui.msgbox("Hello! Welcome to DnD Character Gen!\n")
 raceChoice = easygui.buttonbox("Please choose a character race:", "Race Selection", ("Elf", "Human", "Dwarf"))
 if raceChoice.lower() == "elf":
     race = Elf()
-elif raceChoice.lower() == "human":
+if raceChoice.lower() == "human":
     race = Human()
-elif raceChoice.lower() == "dwarf":
+if raceChoice.lower() == "dwarf":
     race = Dwarf()
     
         
@@ -155,12 +194,15 @@ core =  easygui.buttonbox("Please choose a character class\n\nFighters stike dow
 if core.lower() == "wizard":
     vocation = Wizard()
     easygui.msgbox(vocation.getString())
-elif core.lower() == "fighter":
+if core.lower() == "fighter":
     vocation = Fighter()
     easygui.msgbox(vocation.getString())
-elif core.lower() == "rogue":
+if core.lower() == "rogue":
     vocation = Rogue()
     easygui.msgbox(vocation.getString())
+    
+#adding racial bonuses
+addracialBonus(race,vocation)
  
 #gathering user input for a character name
 while(True):
@@ -183,7 +225,7 @@ sheet.write("Race: {}\n".format(race.title))
 sheet.write(vocation.toString())
 sheet.write("Initiative: +{}\n".format(dex_mod))
 sheet.write("Speed: {} ft\n\n".format(race.speed))
-sheet.write("Str: 14(+2) | Dex: 10(+0) | Con: 16(+3) | Int: 17(+3) | Wis: 12(+1) | Cha: 10(+0) \n")
+sheet.write("Str: {}(+{}) | Dex: {}(+{}) | Con: {}(+{}) | Int: {}(+{}) | Wis: {}(+{}) | Cha: {}(+{}) \n".format(vocation.Str, str_mod, vocation.Dex, dex_mod, vocation.Con, con_mod, vocation.Int, int_mod, vocation.Wis, wis_mod, vocation.Cha, cha_mod))
 
 
 print("Character Sheet Generated Succesfully! \nPlease look for a file named Character_Sheet_{}.txt in the directory you ran this program.".format(name))

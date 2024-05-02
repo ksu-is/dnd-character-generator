@@ -13,19 +13,18 @@ import os
 import sys
 
 #initializing core stats
-Str = 0
-Dex = 0
-Con = 0
-Int = 0
-Wis = 0
-Cha = 0
-race  = ""
-characterClass = ""
+Str = 10
+Dex = 10
+Con = 10
+Int = 10
+Wis = 10
+Cha = 10
+
 
 #init derived stats
 str_mod = 0
-dex_mod = 2
-con_mod = 2
+dex_mod = 0
+con_mod = 0
 int_mod = 0
 wis_mod = 0
 cha_mod = 0
@@ -49,7 +48,7 @@ class Fighter:
       return self.description
 
     def toString(self):
-        return "Class: {} \nHit Dice: d{} \nProficiency Bonus: +{} \nArmor Class: {}\n".format(Fighter.title, Fighter.hd, Fighter.profBonus, Fighter.ac)
+        return "Class: Level 1 {} \nHit Points: {}\nHit Dice: 1d{} \nProficiency Bonus: +{} \n\nArmor Class: {}\n".format(Fighter.title, Fighter.hp, Fighter.hd, Fighter.profBonus, Fighter.ac)
         
 class Wizard:
     title = "Wizard"
@@ -64,7 +63,7 @@ class Wizard:
       return self.description
         
     def toString(self):
-        return "Class: {} \nHit Dice: d{} \nProficiency Bonus: +{} \nArmor Class: {}\n".format(Wizard.title, Wizard.hd, Wizard.profBonus, Wizard.ac)
+        return "Class: Level 1 {} \nHit Points: {}\nHit Dice: 1d{} \nProficiency Bonus: +{} \n\nArmor Class: {}\n".format(Wizard.title, Wizard.hp, Wizard.hd, Wizard.profBonus, Wizard.ac)
         
 class Rogue:
     title = "Rogue"
@@ -79,7 +78,7 @@ class Rogue:
       return self.description
         
     def toString(self):
-        return "Class: {} \nHit Dice: d{} \nProficiency Bonus: +{} \nArmor Class: {}\n".format(Rogue.title, Rogue.hd, Rogue.profBonus, Rogue.ac)
+        return "Class: Level 1 {} \nHit Points: {}\nHit Dice: 1d{} \nProficiency Bonus: +{} \n\nArmor Class: {}\n".format(Rogue.title, Rogue.hp, Rogue.hd, Rogue.profBonus, Rogue.ac)
     
 #print("Str: 14(+2) | Dex: 10(+0) | Con: 16(+3) | Int: 17(+3) | Wis: 12(+1) | Cha: 10(+0) \n")
 
@@ -179,10 +178,15 @@ while(True):
 
 sheet = open("Character_Sheet_{}.txt".format(name), "w")
 
+sheet.write("Name: {}\n".format(name))
+sheet.write("Race: {}\n".format(race.title))
 sheet.write(vocation.toString())
+sheet.write("Initiative: +{}\n".format(dex_mod))
+sheet.write("Speed: {} ft\n\n".format(race.speed))
+sheet.write("Str: 14(+2) | Dex: 10(+0) | Con: 16(+3) | Int: 17(+3) | Wis: 12(+1) | Cha: 10(+0) \n")
 
 
-
+print("Character Sheet Generated Succesfully! \nPlease look for a file named Character_Sheet_{}.txt in the directory you ran this program.".format(name))
 sheet.close()
    
 

@@ -32,9 +32,6 @@ ac = 0
 #classList = ["Figher", "Bard", "Rogue", "Wizard"]
 
 
-
-
-
 #Creating The Fighter Character Class as its own Python Class
 
 class Fighter:
@@ -43,11 +40,14 @@ class Fighter:
     profBonus = 2
     ac = 16
     hp = hd + con_mod
-    def __init__(self, name):
-        self.charName = name
+    
+    description = "You are a Fighter. You wield your weapon with unmatched skill."
+    
+    def getString(self):
+      return self.description
 
     def toString(self):
-        print("Name: {} \nClass: {} \nHit Dice: d{} \nProficiency Bonus: +{} \nArmor Class: {}\n".format(self.charName, Fighter.title, Fighter.hd, Fighter.profBonus, Fighter.ac))
+        print("Class: {} \nHit Dice: d{} \nProficiency Bonus: +{} \nArmor Class: {}\n".format(Fighter.title, Fighter.hd, Fighter.profBonus, Fighter.ac))
         
 class Wizard:
     title = "Wizard"
@@ -55,11 +55,29 @@ class Wizard:
     profBonus = 2
     ac = 13 + dex_mod
     hp = hd + con_mod
-    def __init__(self, name):
-        self.charName = name
+    
+    description = "You are a Wizard! You hold the power to bend reality to your will."
+    
+    def getString(self):
+      return self.description
         
     def toString(self):
-        print("Name: {} \nClass: {} \nHit Dice: d{} \nProficiency Bonus: +{} \nArmor Class: {}\n".format(self.charName, Wizard.title, Wizard.hd, Wizard.profBonus, Wizard.ac))
+        print("Class: {} \nHit Dice: d{} \nProficiency Bonus: +{} \nArmor Class: {}\n".format(Wizard.title, Wizard.hd, Wizard.profBonus, Wizard.ac))
+        
+class Rogue:
+    title = "Rogue"
+    hd = 8
+    profBonus = 2
+    ac = 11 + dex_mod
+    hp = hd + con_mod
+    
+    description = "You are a Rogue. You inflict deadly wounds from the shadows."
+    
+    def getString(self):
+      return self.description
+        
+    def toString(self):
+        print("Class: {} \nHit Dice: d{} \nProficiency Bonus: +{} \nArmor Class: {}\n".format(Rogue.title, Rogue.hd, Rogue.profBonus, Rogue.ac))
     
 #print("Str: 14(+2) | Dex: 10(+0) | Con: 16(+3) | Int: 17(+3) | Wis: 12(+1) | Cha: 10(+0) \n")
 
@@ -119,5 +137,14 @@ while True:
     
 easygui.msgbox(race.getString())
     
-#core = input ("Please choose a character class (Fighter or Wizard): ")
-
+core =  easygui.buttonbox("Please choose a character class\n\nFighters stike down their foes with raw martial prowess\n\nWizards cast powerful magic to control the battlefield\n\nRogues use stealth to strike from the shadows","Class Selction",("Fighter","Wizard","Rogue"))
+if core.lower() == "wizard":
+    vocation = Wizard()
+    easygui.msgbox(vocation.getString())
+elif core.lower() == "fighter":
+    vocation = Fighter()
+    easygui.msgbox(vocation.getString())
+elif core.lower() == "rogue":
+    vocation = Rogue()
+    easygui.msgbox(vocation.getString())
+    

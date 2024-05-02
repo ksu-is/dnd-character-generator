@@ -32,7 +32,6 @@ class Fighter:
     hd = 10
     profBonus = 2
     ac = 16
-    hp = hd + con_mod
     
     Str = 15
     Dex = 13
@@ -48,7 +47,9 @@ class Fighter:
       return self.description
 
     def toString(self):
-        return "Class: Level 1 {} \nHit Points: {}\nHit Dice: 1d{} \nProficiency Bonus: +{} \n\nArmor Class: {}\n".format(Fighter.title, Fighter.hp, Fighter.hd, Fighter.profBonus, Fighter.ac)
+        return "Class: Level 1 {} \nHit Points: {}\nHit Dice: 1d{} \nProficiency Bonus: +{} \n\nArmor Class: {}\n".format(Fighter.title, Fighter.getHp(self), Fighter.hd, Fighter.profBonus, Fighter.ac)
+    def getHp(self):
+        return self.hd + con_mod
         
 class Wizard:
     title = "Wizard"
@@ -71,7 +72,9 @@ class Wizard:
       return self.description
         
     def toString(self):
-        return "Class: Level 1 {} \nHit Points: {}\nHit Dice: 1d{} \nProficiency Bonus: +{} \n\nArmor Class: {}\n".format(Wizard.title, Wizard.hp, Wizard.hd, Wizard.profBonus, Wizard.ac)
+        return "Class: Level 1 {} \nHit Points: {}\nHit Dice: 1d{} \nProficiency Bonus: +{} \n\nArmor Class: {}\n".format(Wizard.title, Wizard.getHp(self), Wizard.hd, Wizard.profBonus, Wizard.ac)
+    def getHp(self):
+        return self.hd + con_mod
         
 class Rogue:
     title = "Rogue"
@@ -93,7 +96,9 @@ class Rogue:
       return self.description
         
     def toString(self):
-        return "Class: Level 1 {} \nHit Points: {}\nHit Dice: 1d{} \nProficiency Bonus: +{} \n\nArmor Class: {}\n".format(Rogue.title, Rogue.hp, Rogue.hd, Rogue.profBonus, Rogue.ac)
+        return "Class: Level 1 {} \nHit Points: {}\nHit Dice: 1d{} \nProficiency Bonus: +{} \n\nArmor Class: {}\n".format(Rogue.title, Rogue.getHp(self), Rogue.hd, Rogue.profBonus, Rogue.ac)
+    def getHp(self):
+        return self.hd + con_mod
 
 
 #Creating Character Races as Python Classes
@@ -171,6 +176,22 @@ def addracialBonus(species, job):
     job.Wis += species.wis_race
     job.Cha += species.cha_race
     
+def getMods(stat):
+    if stat == 10 or stat == 11:
+        return 0
+    if stat == 12 or stat == 13:
+        return 1
+    if stat == 14  or stat == 15:
+        return 2
+    if stat == 16 or stat == 17:
+        return 3
+    if stat == 18 or stat == 19:
+        return 4
+    if stat == 20:
+        return 5
+        
+        
+    
     
 
 #Gathering user input and creating GUI using easygui
@@ -201,8 +222,14 @@ if core.lower() == "rogue":
     vocation = Rogue()
     easygui.msgbox(vocation.getString())
     
-#adding racial bonuses
+#adding racial bonuses and calculating ability score modifiers 
 addracialBonus(race,vocation)
+str_mod = getMods(vocation.Str)
+dex_mod = getMods(vocation.Dex)  
+con_mod = getMods(vocation.Con)  
+int_mod = getMods(vocation.Int)
+wis_mod = getMods(vocation.Wis)
+cha_mod = getMods(vocation.Cha)
  
 #gathering user input for a character name
 while(True):
@@ -216,7 +243,7 @@ while(True):
     else:
         easygui.msgbox("Please input only A-Z and use 20 or less characters")
 
-    
+
 
 sheet = open("Character_Sheet_{}.txt".format(name), "w")
 
@@ -225,7 +252,7 @@ sheet.write("Race: {}\n".format(race.title))
 sheet.write(vocation.toString())
 sheet.write("Initiative: +{}\n".format(dex_mod))
 sheet.write("Speed: {} ft\n\n".format(race.speed))
-sheet.write("Str: {}(+{}) | Dex: {}(+{}) | Con: {}(+{}) | Int: {}(+{}) | Wis: {}(+{}) | Cha: {}(+{}) \n".format(vocation.Str, str_mod, vocation.Dex, dex_mod, vocation.Con, con_mod, vocation.Int, int_mod, vocation.Wis, wis_mod, vocation.Cha, cha_mod))
+sheet.write("Strength: {}(+{}) | Dexterity: {}(+{}) | Constitution: {}(+{}) | Intelligence: {}(+{}) | Wisdom: {}(+{}) | Charisma: {}(+{}) \n".format(vocation.Str, str_mod, vocation.Dex, dex_mod, vocation.Con, con_mod, vocation.Int, int_mod, vocation.Wis, wis_mod, vocation.Cha, cha_mod))
 
 
 print("Character Sheet Generated Succesfully! \nPlease look for a file named Character_Sheet_{}.txt in the directory you ran this program.".format(name))

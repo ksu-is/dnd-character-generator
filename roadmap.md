@@ -6,7 +6,9 @@
 - [X] Create class functionality- next 2 weeks: Mason
 - [ ] Create skills
 - [ ] Create derived statistics (initiative, attack bonues, save DCs, prepared spells)
-- [ ] Add options for race and class
+- [X] Add options for race and class
 - [ ] Add functionality to output all statistics to a file
-- [ ] Add user input
-- [ ] Add GUI
+- [X] Add user input
+- [X] Add GUI
+- [ ] add wizard spells :(
+- [ ] implement misc features (as a list maybe??)

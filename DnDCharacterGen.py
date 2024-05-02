@@ -47,7 +47,7 @@ class Fighter:
       return self.description
 
     def toString(self):
-        print("Class: {} \nHit Dice: d{} \nProficiency Bonus: +{} \nArmor Class: {}\n".format(Fighter.title, Fighter.hd, Fighter.profBonus, Fighter.ac))
+        return "Class: {} \nHit Dice: d{} \nProficiency Bonus: +{} \nArmor Class: {}\n".format(Fighter.title, Fighter.hd, Fighter.profBonus, Fighter.ac)
         
 class Wizard:
     title = "Wizard"
@@ -62,7 +62,7 @@ class Wizard:
       return self.description
         
     def toString(self):
-        print("Class: {} \nHit Dice: d{} \nProficiency Bonus: +{} \nArmor Class: {}\n".format(Wizard.title, Wizard.hd, Wizard.profBonus, Wizard.ac))
+        return "Class: {} \nHit Dice: d{} \nProficiency Bonus: +{} \nArmor Class: {}\n".format(Wizard.title, Wizard.hd, Wizard.profBonus, Wizard.ac)
         
 class Rogue:
     title = "Rogue"
@@ -77,7 +77,7 @@ class Rogue:
       return self.description
         
     def toString(self):
-        print("Class: {} \nHit Dice: d{} \nProficiency Bonus: +{} \nArmor Class: {}\n".format(Rogue.title, Rogue.hd, Rogue.profBonus, Rogue.ac))
+        return "Class: {} \nHit Dice: d{} \nProficiency Bonus: +{} \nArmor Class: {}\n".format(Rogue.title, Rogue.hd, Rogue.profBonus, Rogue.ac)
     
 #print("Str: 14(+2) | Dex: 10(+0) | Con: 16(+3) | Int: 17(+3) | Wis: 12(+1) | Cha: 10(+0) \n")
 
@@ -86,6 +86,7 @@ class Rogue:
 class Elf:
     title = "Wood Elf"
     size = "Medium"
+    speed = 35
     Dex = Dex + 2
     Wis = Wis + 1
     darkvision = True
@@ -97,13 +98,11 @@ class Elf:
     def getString(self):
       return self.description
     
-    def toString(self):
-        print("You are a Wood Elf. Your size class is medium. You gain a +2 to your Dexterity and +1 to your Wisdom scores. You have darkvision with a range of 60ft. You speak the common language and Elven. You gain the feature Fleet of Foot.\n")
-    
 
 class Human:
     title = "Human"
     size = "Medium"
+    speed = 30
     Str = Str + 1
     Dex = Dex + 1
     Con = Con + 1
@@ -118,22 +117,35 @@ class Human:
     def getString(self):
       return self.description
     
-    def toString(self):
-        print("You are a Human. Your size class is medium. You gain a +1 to all ability scores. You speak the common language.\n")
+
+
+class Dwarf:
+    title = "Dwarf"
+    size = "Medium"
+    speed = 25
+    Str = Str + 2
+    Con = Con + 2
+    darkvision = True
+    Languages = ["Common, Dwarven"]
+        
+    description = "You are a Mountain Dwarf. Your size class is medium. You gain a +2 to Strength and Constitution. You are resistant to poison and have addtional weapon and armor proficiencies. You speak the common language and Dwarven.\n"
+    
+    def getString(self):
+      return self.description
+    
 
 
 easygui.msgbox("Hello! Welcome to DnD Character Gen!\n")
 
-while True:
-    raceChoice = easygui.buttonbox("Please choose a character race:", "Race Selection", ("Elf", "Human", "Dwarf"))
-    if raceChoice.lower() == "elf":
-        race = Elf()
-        break
-    elif raceChoice.lower() == "human":
-        race = Human()
-        break
-    else:
-        easygui.msgbox("Please select either Elf or Human")
+raceChoice = easygui.buttonbox("Please choose a character race:", "Race Selection", ("Elf", "Human", "Dwarf"))
+if raceChoice.lower() == "elf":
+    race = Elf()
+elif raceChoice.lower() == "human":
+    race = Human()
+elif raceChoice.lower() == "dwarf":
+    race = Dwarf()
+    
+        
     
 easygui.msgbox(race.getString())
     
@@ -147,4 +159,6 @@ elif core.lower() == "fighter":
 elif core.lower() == "rogue":
     vocation = Rogue()
     easygui.msgbox(vocation.getString())
+    
+
     

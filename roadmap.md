@@ -9,7 +9,7 @@
 - [X] Add functionality to output all statistics to a file
 - [X] Add user input
 - [X] Add GUI
-- [ ] add wizard spells :(
+- [X] add wizard spells :(
 - [ ] implement misc features (as a list maybe??)
-- [ ] create spell dcs, and attacks
+- [X] create spell dcs, and attacks
 - [ ] Create skills

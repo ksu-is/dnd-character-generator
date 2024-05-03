@@ -1,9 +1,8 @@
 """
 DnD Character Generator
 Author: Mason Nix
-Main Progran Functionality
 
-!!!!To understand the distinction between "Character Class" and "Python Class" please see the README. It is important to avoid confusion!!!!!
+!!!! Please see the README at https://github.com/ksu-is/dnd-character-generator. It is important to install easygui !!!!!
 
 
 
@@ -21,9 +20,8 @@ wis_mod = 0
 cha_mod = 0
 
 
-
+#init features list
 features = []
-
 
 #Creating Character Classes as its own Python Class
 
@@ -31,7 +29,9 @@ class Fighter:
     title = "Fighter"
     hd = 10
     profBonus = 2
-    ac = 16
+    ac = 16 # chain mail
+    primary = "str"
+    weapon = "greatsword"
     
     Str = 15
     Dex = 13
@@ -57,8 +57,11 @@ class Wizard:
     title = "Wizard"
     hd = 6
     profBonus = 2
-    ac = 13 + dex_mod
-    hp = hd + con_mod
+    ac = 13 #mage armor
+    primary = "int"
+    weapon = "none"
+    spellbook_0 = ["Minor Illusion,", "Mage Hand,", "Firebolt"]
+    spellbook_1 = ["Mage Armor,", "Shield,", "Magic Missile,", "Find Familiar,", "Detect Magic,", "Chromatic Orb"]
     
     Str = 10
     Dex = 14
@@ -74,18 +77,21 @@ class Wizard:
       return self.description
         
     def toString(self):
-        return "Class: Level 1 {} \nHit Points: {}\nHit Dice: 1d{} \nProficiency Bonus: +{} \n\nArmor Class: {}\n".format(Wizard.title, Wizard.getHp(self), Wizard.hd, Wizard.profBonus, Wizard.ac)
+        return "Class: Level 1 {} \nHit Points: {}\nHit Dice: 1d{} \nProficiency Bonus: +{} \n\nArmor Class: {}\n".format(Wizard.title, Wizard.getHp(self), Wizard.hd, Wizard.profBonus, Wizard.getAc(self))
     def getHp(self):
         return self.hd + con_mod
     def getSaves(self):
         return["wis","int"]
+    def getAc(self):
+        return self.ac + dex_mod
         
 class Rogue:
     title = "Rogue"
     hd = 8
     profBonus = 2
-    ac = 11 + dex_mod
-    hp = hd + con_mod
+    ac = 11 #leather armor
+    primary = "dex"
+    weapon = "dagger"
 
     Str = 10
     Dex = 15
@@ -100,11 +106,13 @@ class Rogue:
       return self.description
         
     def toString(self):
-        return "Class: Level 1 {} \nHit Points: {}\nHit Dice: 1d{} \nProficiency Bonus: +{} \n\nArmor Class: {}\n".format(Rogue.title, Rogue.getHp(self), Rogue.hd, Rogue.profBonus, Rogue.ac)
+        return "Class: Level 1 {} \nHit Points: {}\nHit Dice: 1d{} \nProficiency Bonus: +{} \n\nArmor Class: {}\n".format(Rogue.title, Rogue.getHp(self), Rogue.hd, Rogue.profBonus, Rogue.getAc(self))
     def getHp(self):
         return self.hd + con_mod
     def getSaves(self):
         return["dex","int"]
+    def getAc(self):
+        return self.ac + dex_mod
 
 
 #Creating Character Races as Python Classes
@@ -222,9 +230,19 @@ def calcSaves(prof,job):
         
     return [str_save, dex_save ,con_save ,int_save ,wis_save ,cha_save]
     
-        
-        
-        
+def calcAttack(martial):
+    if martial.title.lower() == "wizard":
+        return
+    if martial.primary == "str":
+        return str_mod + martial.profBonus
+    if martial.primary == "dex":
+        return dex_mod + martial.profBonus
+    
+def calcSpellDC(caster):
+    if caster.title.lower() != "wizard":
+        return
+    dc = 8 + caster.profBonus + int_mod
+    return dc
         
         
     
@@ -235,19 +253,27 @@ easygui.msgbox("Hello! Welcome to DnD Character Gen!\n")
 
 #User selects their race from elf, human, or dwarf
 raceChoice = easygui.buttonbox("Please choose a character race:", "Race Selection", ("Elf", "Human", "Dwarf"))
+
+if raceChoice == None:
+    print("Exiting...")
+    sys.exit()
 if raceChoice.lower() == "elf":
     race = Elf()
 if raceChoice.lower() == "human":
     race = Human()
 if raceChoice.lower() == "dwarf":
     race = Dwarf()
-    
+
         
     
 easygui.msgbox(race.getString())
 
 ##User selects their character class from wizard, fighter, or rogue    
 core =  easygui.buttonbox("Please choose a character class\n\nFighters stike down their foes with raw martial prowess\n\nWizards cast powerful magic to control the battlefield\n\nRogues use stealth to strike from the shadows","Class Selction",("Fighter","Wizard","Rogue"))
+
+if core == None:
+    print("Exiting...")
+    sys.exit()
 if core.lower() == "wizard":
     vocation = Wizard()
     easygui.msgbox(vocation.getString())
@@ -267,6 +293,8 @@ int_mod = getMods(vocation.Int)
 wis_mod = getMods(vocation.Wis)
 cha_mod = getMods(vocation.Cha)
 savesList = calcSaves(vocation.getSaves(),vocation)
+spellDc = calcSpellDC(vocation)
+atkBonus = calcAttack(vocation)
  
 #gathering user input for a character name
 while(True):
@@ -281,7 +309,7 @@ while(True):
         easygui.msgbox("Please input only A-Z and use 20 or less characters")
 
 
-
+#creating the sheet and writing all character information to the file
 sheet = open("Character_Sheet_{}.txt".format(name), "w")
 
 sheet.write("Name: {}\n".format(name))
@@ -291,6 +319,21 @@ sheet.write("Initiative: +{}\n".format(dex_mod))
 sheet.write("Speed: {} ft\n\n".format(race.speed))
 sheet.write("Strength: {}(+{}) | Dexterity: {}(+{}) | Constitution: {}(+{}) | Intelligence: {}(+{}) | Wisdom: {}(+{}) | Charisma: {}(+{}) \n".format(vocation.Str, str_mod, vocation.Dex, dex_mod, vocation.Con, con_mod, vocation.Int, int_mod, vocation.Wis, wis_mod, vocation.Cha, cha_mod))
 sheet.write("Saving Throws: Str +{}, Dex +{}, Con +{}, Int +{}, Wis +{}, Cha +{}".format(savesList[0], savesList[1], savesList[2], savesList[3], savesList[4], savesList[5]))
+
+if vocation.title.lower() == "wizard":
+    sheet.write("\n\nSpell Save DC: {}".format(spellDc))
+    sheet.write("\nCantrips: ")
+    for x in vocation.spellbook_0:
+        sheet.write(x + " ")
+    sheet.write("\n1st Level Spells: ")
+    for x in vocation.spellbook_1:
+        sheet.write(x + " ")
+    sheet.write("(2 spell slots)")
+    sheet.write("\n\n\n")
+if vocation.weapon == "greatsword":
+    sheet.write("\n\nWeapon Attacks\nGreatsword: +{} to hit, 2d6 + {} slashing damage".format(atkBonus,str_mod))
+if vocation.weapon == "dagger":
+    sheet.write("\n\nWeapon Attacks\nDagger: +{} to hit, 1d4 + {} slashing damage + 1d6 (Sneak Attack)".format(atkBonus,dex_mod))
 
 print("Character Sheet Generated Succesfully! \nPlease look for a file named Character_Sheet_{}.txt in the directory you ran this program.".format(name))
 sheet.close()
